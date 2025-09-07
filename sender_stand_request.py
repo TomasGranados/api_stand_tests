@@ -2,7 +2,6 @@ from numpy.ma.core import count
 
 import configuration
 import requests
-
 import data
 
 
@@ -21,18 +20,21 @@ print(response.status_code)
 
 print(data.user_body["firstName"])
 
+def post_new_user(body):
+    return requests.post(configuration.URL_SERVICE + configuration.CREATE_USER_PATH,
+                         json=body,
+                         headers=data.headers)
 
-# Prueba 1. Creación de un nuevo usuario o usuaria
-# El parámetro "firstName" contiene dos caracteres
+response = post_new_user(data.user_body)
+print(response.status_code)
+print(response.json())
 
-def test_create_user_2_letter_in_first_name_get_success_response():
-    # La versión actualizada del cuerpo de solicitud con el nombre "Aa" se guarda en la variable "user_body"
-    user_body = get_user_body("Aa")
-    # El resultado de la solicitud relevante se guarda en la variable "user_response"
-    user_response = sender_stand_request.post_new_user(user_body)
+def post_products_kits(products_ids):
+        return requests.post(configuration.URL_SERVICE + configuration.PRODUCTS_KIT_PATH,
+        json=products_ids,
+        headers=data.headers)
 
-    # Comprueba si el código de estado es 201
-    assert user_response.status_code == 201
-    # Comprueba que el campo authToken está en la respuesta y contiene un valor
-    assert user_response.json()["authToken"] != ""
+response = post_products_kits(data.product_ids)
+print(response.status_code)
+
 
