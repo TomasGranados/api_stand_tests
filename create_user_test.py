@@ -23,6 +23,12 @@ def negative_assert(first_name):
 
     assert user_response.status_code == 400
 
+def negative_assert_missing_first_name():
+    user_body = data.user_body_without_first_name  # Sin los paréntesis ()
+    user_response = sender_stand_request.post_new_user(user_body)
+
+    assert user_response.status_code == 400
+
 def test_create_user_2_letter_in_first_name_get_success_response():
     positive_assert("Aa")
 
@@ -44,3 +50,12 @@ def test_string_con_numeros():
 
 def test_caracteres_especiales():
     negative_assert("№%@")
+
+def test_missing_first_name():
+    negative_assert_missing_first_name()
+
+def test_caracteres_faltantes():
+    negative_assert("")
+
+def test_caracteres_diferente():
+    negative_assert(12)
